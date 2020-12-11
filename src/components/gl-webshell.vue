@@ -1,9 +1,17 @@
 <template>
   <div>
+    <ul>
+<!--      <li v-for="item in items" :key="item.message">
+        {{ item.message }}
+      </li>-->
+      <li v-for="item in output" :key="item">
+        {{ item }}
+      </li>
+    </ul>
+    <!--<p ref="listing">{{ prompt }}</p>-->
     <form id="cmd" v-on:submit.prevent>  <!-- alternativ: v-on:submit.prevent="readcmd">  -->
       $ <input id="cmdin" v-model="command" @keyup="readcmd($event)" placeholder="test" autofocus type="text" autocomplete="off" size="42"/>
     </form>
-    <p>Command is: {{ prompt }}</p>
   </div>
 </template>
 
@@ -13,21 +21,53 @@
     data() {
       return {
         command: "",
-        prompt: ""
+        prompt: "",
+        items : [
+          { message: 'Fooooooo' },
+          { message: 'Bar' }
+        ],
+        output : [],
+        history : []
       }
     },
     methods: {
       readcmd: function (event) {
+        //var fx=function (){
+        //  this.output.push("FX");
+        //}
+        function runfn(ctx, fn) {
+          //parent.this.prompt = "scopeHello!";
+          //ctx.prompt = "Hello!xxx";
+          //var x = fn;
+          fn.bind(ctx);
+          fn();
+          alert("blub");
+        }
         var befehle = {
-          'print': function () {this.prompt = "Hello World"}
+          'printx': function () { alert("printx")},
+          'clr'   : function () { this.output.push("CLEAR") }
         }
         //this.prompt = befehle['print']; //befehle.get('print');
         //console.log("test"+event.keyCode);
         //this.prompt = event.code;
         //if (event.code === 'Enter') this.prompt = this.command;
         if (event.code === 'Enter') {
-          //if (Object.keys(befehle).includes(this.command)) befehle.get(this.command);
-          this.prompt = befehle[this.command];
+          //if (Object.keys(befehle).includes(this.command)) befehle.get(this.command)
+          //alert('xxx');
+          //this.items.push({message:this.command});
+          this.output.push(this.command);
+          this.history.push(this.command);
+          //this.prompt += this.command;
+          //this.$refs.listing.appendChild();
+          //this.prompt = befehle[this.command];
+
+          //fx.bind(this);
+          //https://alexandernaumov.de/artikel/javascript-apply-call-bind-unterschied
+          //fx();
+
+          runfn.bind(this);
+          runfn(this, befehle[this.command]);
+          //befehle[this.command]().bind(this);
         }
         //this.prompt = event.code;
         switch (this.command) {
@@ -130,5 +170,10 @@
   #prompt{
     background:#ccc0;
 
+  }
+
+  ul{
+    list-style: none;
+    alignment: left;
   }
 </style>

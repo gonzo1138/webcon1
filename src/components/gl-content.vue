@@ -1,19 +1,19 @@
 <template>
     <div id="content">
-      {{msg}}
+      <!--{{msg}}
       <img src="../assets/logo.png">
       <gl-shell
           :banner="banner"
           :shell_input="send_to_terminal"
           :commands="commands"
           @shell_output="prompt"
-      ></gl-shell>
+      ></gl-shell> -->
       <gl-webshell></gl-webshell>
     </div>
 </template>
 
 <script>
-    import GlShell from "@/components/gl-shell";
+    //import GlShell from "@/components/gl-shell";
     import GlWebshell from "@/components/gl-webshell";
 
     function func1() {
@@ -23,7 +23,7 @@
     export default {
         name: "GlContent",
         components: {
-          GlShell,
+          //GlShell,
           GlWebshell,
         },
         data() {
