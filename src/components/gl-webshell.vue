@@ -36,16 +36,22 @@
         //  this.output.push("FX");
         //}
         function runfn(ctx, fn) {
+          //console.log(fn);
+          if (fn !== undefined){
+            console.log(fn.name,'>',ctx);
+            fn.bind(ctx)();
+          }
           //parent.this.prompt = "scopeHello!";
           //ctx.prompt = "Hello!xxx";
           //var x = fn;
-          fn.bind(ctx);
-          fn();
-          alert("blub");
+          //fn.bind(ctx);
+          //fn();
+          //alert("blub");
         }
         var befehle = {
-          'printx': function () { alert("printx")},
-          'clr'   : function () { this.output.push("CLEAR") }
+          'printx': function printx() { alert("printx")},
+          'clr'   : function clrname() { this.output.push("CLEAR");},
+          'clrx'  : function () { this.output=[];}
         }
         //this.prompt = befehle['print']; //befehle.get('print');
         //console.log("test"+event.keyCode);
@@ -65,9 +71,9 @@
           //https://alexandernaumov.de/artikel/javascript-apply-call-bind-unterschied
           //fx();
 
-          runfn.bind(this);
-          runfn(this, befehle[this.command]);
-          //befehle[this.command]().bind(this);
+          console.log('main###>',this);
+          //befehle[this.command].bind(this)();
+          runfn(this,befehle[this.command]);
         }
         //this.prompt = event.code;
         switch (this.command) {
